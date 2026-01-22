@@ -24,7 +24,8 @@ student_data = {
 # TODO:
 # - Convert the courses list into a set
 # - Print the unique courses
-
+new_courses = set(courses)
+print("New courses:", new_courses)
 
 # ------------------------------
 # Task 2: Display Student Info
@@ -33,6 +34,9 @@ student_data = {
 # - Loop through the students list
 # - For each student, print:
 #   Name, age, and enrolled courses
+for name, age in students:
+    enrolled_courses = student_data[name]["courses"]
+    print(f"Name: {name}, Age: {age}, Courses: {enrolled_courses}")
 
 
 # ------------------------------
@@ -42,6 +46,9 @@ student_data = {
 # - Add "Databases" to Bob's course list
 #   ONLY if he is not already enrolled
 # - Print Bob's updated course list
+if "Databases" not in student_data["Bob"]["courses"]:
+    student_data["Bob"]["courses"].append("Databases")
+print("Bob's updated courses:", student_data["Bob"]["courses"])
 
 
 # ------------------------------
@@ -50,6 +57,10 @@ student_data = {
 # TODO:
 # - Loop through student_data
 # - Calculate and print each student's average grade
+for name, info in student_data.items():
+    grades = info["grades"]
+    average = sum(grades) / len(grades)
+    print(f"{name}'s average grade: {average}")
 
 
 # ------------------------------
@@ -58,7 +69,10 @@ student_data = {
 # TODO:
 # - Ask the user to enter a course name
 # - Print all students enrolled in that course
-
+course_name = input("Enter a course name to find enrolled students: ").lower()
+for name, info in student_data.items():
+    if course_name in [course.lower() for course in info["courses"]]:
+        print(name)
 
 # ------------------------------
 # Bonus (Optional)
@@ -66,3 +80,14 @@ student_data = {
 # TODO:
 # - Store each student's average grade in the dictionary
 # - Print the student with the highest average grade
+highest_avg = 0
+top_student = ""  
+for name, info in student_data.items():
+    grades = info["grades"]
+    average = sum(grades) / len(grades)
+    info["average"] = average  # store average in dictionary
+    if average > highest_avg:
+        highest_avg = average
+        top_student = name
+
+print(f"Top student: {top_student} with an average grade of {highest_avg}")
